@@ -1,6 +1,4 @@
-# fdfs-docker-cn
-
-* 在原代码上做了如下修改
+# fdfs-docker
 
 - 1 合并 2个项目
 
@@ -16,16 +14,16 @@
 
 
 
-## 1 设置环境变量localIp为本机器的外网ip用于tracker 和 storage通信
+## 1 setup Env localIp = WAN IP   for tracker connect storage.
 echo localIp=1.2.3.4  >> /etc/profile
 
-## 2 构建image 
+## 2 build image 
 ```
 cd tracker && docker build -t fdfs_tracker .
 cd storage && docker build -t fdfs_storage .
 ```
 
-## 3 构建 container 
+## 3 create container 
 `
 docker run -d --name tracker -v /app/fdfs/data/tracker:/data/tracker -p 22122:22122 fdfs_tracker
 `
@@ -35,17 +33,17 @@ docker run -d --name storage -v /app/fdfs/data/storage:/data/storage --link trac
 `
 
 
-## 4 调试 
+## 4 log
 ```
 docker logs tracker
 docker logs storage 
 ```
 
-## 5 删除 
+## 5 delete 
 docker rm storage  tracker -f
 
 
-## 6 debug 删除 entrypoint后运行以下
+## 6 debug  [@before dockerfile delete entrypoint.sh]
 `docker run -it --name storage -v /app/fdfs/data/storage:/data/storage \
   --link tracker:tracker \
   -p 80:80 -p 23000:23000 -p 8888:8888 \
@@ -58,7 +56,7 @@ docker rm storage  tracker -f
 
 
 
-# 问题解决
+# bug fix:
 
 * storage启动时，file: tracker_proto.c, line: 48, server: *:22122, response status 22 != 0
 
