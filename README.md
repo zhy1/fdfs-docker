@@ -1,6 +1,6 @@
 # fdfs-docker-cn
 
-在原代码上做了如下修改
+* 在原代码上做了如下修改
 
 - 1 合并 2个项目
 
@@ -45,7 +45,7 @@ docker logs storage
 docker rm storage  tracker -f
 
 
-# 6 debug 删除 entrypoint后运行以下
+## 6 debug 删除 entrypoint后运行以下
 `docker run -it --name storage -v /app/fdfs/data/storage:/data/storage \
   --link tracker:tracker \
   -p 80:80 -p 23000:23000 -p 8888:8888 \
@@ -58,8 +58,10 @@ docker rm storage  tracker -f
 
 
 
-问题解决
-storage启动时，file: tracker_proto.c, line: 48, server: *:22122, response status 22 != 0
-表示storage的pid和tracker对应不上，可以删除tracker的data 和 storage 的pid
+# 问题解决
+
+* storage启动时，file: tracker_proto.c, line: 48, server: *:22122, response status 22 != 0
+
+- 表示storage的pid和tracker对应不上，可以删除tracker的data 和 storage 的pid
 
 
